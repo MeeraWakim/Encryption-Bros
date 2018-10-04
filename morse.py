@@ -17,7 +17,29 @@ def encrypt (text, encryptionMethod):
 	if (encryptionMethod == 1):
 		# do morse code encryption
 		# use a dictionary to map letters to dots/dashes?
-		x = 1
+		morseDict = {'A': '.-',     'B': '-...',   'C': '-.-.',
+    	'D': '-..',    'E': '.',      'F': '..-.',
+    	'G': '--.',    'H': '....',   'I': '..',
+    	'J': '.---',   'K': '-.-',    'L': '.-..',
+    	'M': '--',     'N': '-.',     'O': '---',
+    	'P': '.--.',   'Q': '--.-',   'R': '.-.',
+    	'S': '...',    'T': '-',      'U': '..-',
+    	'V': '...-',   'W': '.--',    'X': '-..-',
+    	'Y': '-.--',   'Z': '--..',
+
+    	'0': '-----',  '1': '.----',  '2': '..---',
+    	'3': '...--',  '4': '....-',  '5': '.....',
+    	'6': '-....',  '7': '--...',  '8': '---..',
+    	'9': '----.'
+    	}
+
+		encryptedTextList = []
+
+		for char in text:
+			if (char.upper() in morseDict.keys()):
+				encryptedTextList.append(morseDict[char.upper()])
+
+		encryptedText = ' '.join(encryptedTextList)
 
 	elif (encryptionMethod == 2):
 		# do other method encryption
@@ -56,13 +78,14 @@ def main():
 		filename = input("Enter the name of the file you'd like to encrypt: ")
 		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for other: "))
 		text = readFile(filename)
-		encryptedText = encrypt(text)
+		encryptedText = encrypt(text,encryptionMethod)
 		writeFile(encryptedText)
+		print(encryptedText)
 	elif (encryptDecrypt == 2):
 		filename = input("Enter the name of the file you'd like to decrypt: ")
 		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for other: "))
 		text = readFile(filename)
-		decryptedText = decrypt(text)
+		decryptedText = decrypt(text,decryptionMethod)
 		writeFile(decryptedText)
 
 main()
