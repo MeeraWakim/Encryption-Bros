@@ -11,8 +11,8 @@ def readFile (filename):
 def pigLatin (text):
 
 	# constants list
-	lowerVowelsList = [a, e, i, o, u]
-	upperVowelsList = [A, E, I, O, U]
+	lowerVowelsList = ['a', 'e', 'i', 'o', 'u']
+	upperVowelsList = ['A', 'E', 'I', 'O', 'U']
 
 	# holding lists
 	convText = []
@@ -25,13 +25,16 @@ def pigLatin (text):
 		pigWord = word
 		# check if first is vowel
 		if (word[0] in lowerVowelsList) or (word[0] in upperVowelsList):
-			# YES: add way to end *MISSING CODE*
+			# YES: add way to end 
+			pigWord = word + 'way'
 		else:
 			# NO: check if second is vowel
 			if (word[1] in lowerVowelsList) or (word[1] in upperVowelsList):
-				# YES: get first letter, add to end + 'ay' *MISSING CODE*
+				# YES: get first letter, add to end + 'ay' 
+				pigWord = word[1:] + word[0] + 'ay'
 			else:
-				# NO: get both letters, add to end + 'ay' *MISSING CODE*
+				# NO: get both letters, add to end + 'ay'
+				pigWord = word[2:] + word[0:2] + 'ay'
 		# add new word to new list
 		pigTextList.append(pigWord)
 
@@ -88,13 +91,13 @@ def main():
 		filename = input("Enter the name of the file you'd like to encrypt: ")
 		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for other: "))
 		text = readFile(filename)
-		encryptedText = encrypt(text)
+		encryptedText = encrypt(text, encryptionMethod)
 		writeFile(encryptedText)
 	elif (encryptDecrypt == 2):
 		filename = input("Enter the name of the file you'd like to decrypt: ")
 		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for other: "))
 		text = readFile(filename)
-		decryptedText = decrypt(text)
+		decryptedText = decrypt(text, decryptionMethod)
 		writeFile(decryptedText)
 
 main()
