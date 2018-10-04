@@ -52,10 +52,32 @@ def decrypt (text, decryptionMethod):
 	# text read in from file passed in
 	# int passed in that specifies which decryption method
 
+	morseList = text.split(' ')
+	print(morseList)
+
 	if (decryptionMethod == 1):
 		# do morse code decryption
 		# use a dictionary to map letters to dots/dashes?
-		x = 1
+		englishDict = {'.-': 'A',   '-...': 'B',   '-.-.': 'C',
+		'-..': 'D',      '.': 'E',   '..-.': 'F',
+		'-.': 'G',   '....': 'H',     '..': 'I',  
+		'.---': 'J',    '-.-': 'K',   '.-..': 'L',
+		'--': 'M',     '-.': 'N',    '---': 'O', 
+		'.--.': 'P',   '--.-': 'Q',    '.-.': 'R',
+		'...': 'S',      '-': 'T',    '..-': 'U', 
+		'...-': 'V',    '.--': 'W',   '-..-': 'X',
+		'-.--': 'Y',   '--..': 'Z',  '-----': '0', 
+		'.----': '1',  '..---': '2',  '...--': '3',
+		'....-': '4',  '.....': '5',  '-....': '6', 
+		'--...': '7',  '---..': '8',  '----.': '9'}
+
+		decryptedTextList = []
+
+		for word in morseList:
+			if (word in englishDict.keys()):
+				decryptedTextList.append(englishDict[word])
+
+		decryptedText = ''.join(decryptedTextList)
 
 	elif (decryptionMethod == 2):
 		# do other method decryption
@@ -80,7 +102,6 @@ def main():
 		text = readFile(filename)
 		encryptedText = encrypt(text,encryptionMethod)
 		writeFile(encryptedText)
-		print(encryptedText)
 	elif (encryptDecrypt == 2):
 		filename = input("Enter the name of the file you'd like to decrypt: ")
 		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for other: "))
