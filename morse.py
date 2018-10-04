@@ -25,13 +25,13 @@ def pigLatin (text):
 		pigWord = word
 		# check if first is vowel
 		if (word[0] in lowerVowelsList) or (word[0] in upperVowelsList):
-			# YES: add way to end
+			# YES: add way to end *MISSING CODE*
 		else:
 			# NO: check if second is vowel
 			if (word[1] in lowerVowelsList) or (word[1] in upperVowelsList):
-				# YES: get first letter, add to end + 'ay'
+				# YES: get first letter, add to end + 'ay' *MISSING CODE*
 			else:
-				# NO: get both letters, add to end + 'ay'
+				# NO: get both letters, add to end + 'ay' *MISSING CODE*
 		# add new word to new list
 		pigTextList.append(pigWord)
 
