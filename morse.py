@@ -8,38 +8,6 @@ def readFile (filename):
 
 	return(text)
 
-def pigLatin (text):
-
-	# constants list
-	lowerVowelsList = ['a', 'e', 'i', 'o', 'u']
-	upperVowelsList = ['A', 'E', 'I', 'O', 'U']
-
-	# holding lists
-	convText = []
-	pigTextList = []
-
-	convText = text.split()
-
-	# convert to each word into pig latin
-	for word in convText:
-		pigWord = word
-		# check if first is vowel
-		if (word[0] in lowerVowelsList) or (word[0] in upperVowelsList):
-			# YES: add way to end 
-			pigWord = word + 'way'
-		else:
-			# NO: check if second is vowel
-			if (word[1] in lowerVowelsList) or (word[1] in upperVowelsList):
-				# YES: get first letter, add to end + 'ay' 
-				pigWord = word[1:] + word[0] + 'ay'
-			else:
-				# NO: get both letters, add to end + 'ay'
-				pigWord = word[2:] + word[0:2] + 'ay'
-		# add new word to new list
-		pigTextList.append(pigWord)
-
-	return (pigTextList)
-
 def encrypt (text, encryptionMethod):
 
 	# text read in from file passed in
@@ -51,13 +19,40 @@ def encrypt (text, encryptionMethod):
 		x = 1
 
 	elif (encryptionMethod == 2):
-		# call pig function
-		encryptedTextList = pigLatin(text)
+
+		# constants list
+		lowerVowelsList = ['a', 'e', 'i', 'o', 'u']
+		upperVowelsList = ['A', 'E', 'I', 'O', 'U']
+
+		# holding lists
+		convText = []
+		encryptedTextList = []
+
+		convText = text.split()
+
+		# convert to each word into pig latin
+		for word in convText:
+			pigWord = word
+			# check if first is vowel
+			if (word[0] in lowerVowelsList) or (word[0] in upperVowelsList):
+				# YES: add way to end 
+				pigWord = word + 'way'
+			else:
+				# NO: check if second is vowel
+				if (word[1] in lowerVowelsList) or (word[1] in upperVowelsList):
+					# YES: get first letter, add to end + 'ay' 
+					pigWord = word[1:] + word[0] + 'ay'
+				else:
+					# NO: get both letters, add to end + 'ay'
+					pigWord = word[2:] + word[0:2] + 'ay'
+			# add new word to new list
+			pigTextList.append(pigWord)
 
 		# join list w/ spaces in btw.
 		encryptedText = ' '.join(encryptedTextList)
 
 		x = 1
+		
 	return(encryptedText)
 
 def decrypt (text, decryptionMethod):
