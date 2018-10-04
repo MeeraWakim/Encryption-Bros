@@ -8,6 +8,34 @@ def readFile (filename):
 
 	return(text)
 
+def pigLatin (text):
+
+	# constants list
+	lowerVowelsList = [a, e, i, o, u]
+	upperVowelsList = [A, E, I, O, U]
+
+	# holding lists
+	convText = []
+	pigTextList = []
+
+	convText = text.split()
+
+	# convert to each word into pig latin
+	for word in convText:
+		pigWord = word
+		# check if first is vowel
+		if (word[0] in lowerVowelsList) or (word[0] in upperVowelsList):
+			# YES: add way to end
+		else:
+			# NO: check if second is vowel
+			if (word[1] in lowerVowelsList) or (word[1] in upperVowelsList):
+				# YES: get first letter, add to end + 'ay'
+			else:
+				# NO: get both letters, add to end + 'ay'
+		# add new word to new list
+		pigTextList.append(pigWord)
+
+	return (pigTextList)
 
 def encrypt (text, encryptionMethod):
 
@@ -20,9 +48,13 @@ def encrypt (text, encryptionMethod):
 		x = 1
 
 	elif (encryptionMethod == 2):
-		# do other method encryption
-		x = 1
+		# call pig function
+		encryptedTextList = pigLatin(text)
 
+		# join list w/ spaces in btw.
+		encryptedText = ' '.join(encryptedTextList)
+
+		x = 1
 	return(encryptedText)
 
 def decrypt (text, decryptionMethod):
