@@ -21,8 +21,8 @@ def encrypt (text, encryptionMethod):
 	elif (encryptionMethod == 2):
 
 		# constants list
-		lowerVowelsList = ['a', 'e', 'i', 'o', 'u', 'y']
-		upperVowelsList = ['A', 'E', 'I', 'O', 'U', 'Y']
+		lowerVowelsList = ['a', 'e', 'i', 'o', 'u', 'w']
+		upperVowelsList = ['A', 'E', 'I', 'O', 'U', 'W']
 
 		# holding lists
 		encryptedTextList = []
@@ -66,8 +66,6 @@ def decrypt (text, decryptionMethod):
 		# do other method decryption
 
 		# constant lists
-		lowerVowelsList = ['a', 'e', 'i', 'o', 'u', 'y']
-		upperVowelsList = ['A', 'E', 'I', 'O', 'U', 'Y']
 		lowerConsonantClustersList = ['bl', 'br', 'ch', 'cl', 'cr', 'dr', 'fl', 'fr', 'gh', 'gl', 'gr', 'ph', 'pl', 'pr', 'sc', 'sh', 'sk', 'sl', 'sm', 'sn', 'sp', 'st', 'sw', 'th', 'tr', 'tw', 'wh', 'wr']
 		upperConsonantClustersList = ['Bl', 'Br', 'Ch', 'Cl', 'Cr', 'Dr', 'Fl', 'Fr', 'Gh', 'Gl', 'Gr', 'Ph', 'Pl', 'Pr', 'Sc', 'Sh', 'Sk', 'Sl', 'Sm', 'Sn', 'Sp', 'St', 'Sw', 'Th', 'Tr', 'Tw', 'Wh', 'Wr']
 
@@ -85,8 +83,13 @@ def decrypt (text, decryptionMethod):
 			else:
 				# IF | check if 3rd to last character is w
 				if (word[-3] == 'w'):
-					# YES: remove 'way'
-					normWord = word[:-3]
+					# check if 4th to last character is also w
+					if (word[-4] == 'w' or word[-4] == 'W'):
+						# YES: remove 'way' and move letter to front
+						normWord = word[-4] + word[:-4]
+					else:
+						# NO: remove 'way'
+						normWord = word[:-3]
 				# remove 'ay' & move letter to front
 				normWord = word[-3] + word[:-3]
 			# add new word to list
