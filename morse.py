@@ -21,18 +21,15 @@ def encrypt (text, encryptionMethod):
 	elif (encryptionMethod == 2):
 
 		# constants list
-		lowerVowelsList = ['a', 'e', 'i', 'o', 'u']
-		upperVowelsList = ['A', 'E', 'I', 'O', 'U']
+		lowerVowelsList = ['a', 'e', 'i', 'o', 'u', 'y']
+		upperVowelsList = ['A', 'E', 'I', 'O', 'U', 'Y']
 
 		# holding lists
-		convText = []
 		encryptedTextList = []
-
-		convText = text.split()
+		convTextList = text.split()
 
 		# convert to each word into pig latin
-		for word in convText:
-			pigWord = word
+		for word in convTextList:
 			# check if first is vowel
 			if (word[0] in lowerVowelsList) or (word[0] in upperVowelsList):
 				# YES: add way to end 
@@ -46,13 +43,13 @@ def encrypt (text, encryptionMethod):
 					# NO: get both letters, add to end + 'ay'
 					pigWord = word[2:] + word[0:2] + 'ay'
 			# add new word to new list
-			pigTextList.append(pigWord)
+			encryptedTextList.append(pigWord)
 
 		# join list w/ spaces in btw.
 		encryptedText = ' '.join(encryptedTextList)
 
 		x = 1
-		
+
 	return(encryptedText)
 
 def decrypt (text, decryptionMethod):
@@ -67,6 +64,37 @@ def decrypt (text, decryptionMethod):
 
 	elif (decryptionMethod == 2):
 		# do other method decryption
+
+		# constant lists
+		lowerVowelsList = ['a', 'e', 'i', 'o', 'u', 'y']
+		upperVowelsList = ['A', 'E', 'I', 'O', 'U', 'Y']
+		lowerConsonantClustersList = ['bl', 'br', 'ch', 'cl', 'cr', 'dr', 'fl', 'fr', 'gh', 'gl', 'gr', 'ph', 'pl', 'pr', 'sc', 'sh', 'sk', 'sl', 'sm', 'sn', 'sp', 'st', 'sw', 'th', 'tr', 'tw', 'wh', 'wr']
+		upperConsonantClustersList = ['Bl', 'Br', 'Ch', 'Cl', 'Cr', 'Dr', 'Fl', 'Fr', 'Gh', 'Gl', 'Gr', 'Ph', 'Pl', 'Pr', 'Sc', 'Sh', 'Sk', 'Sl', 'Sm', 'Sn', 'Sp', 'St', 'Sw', 'Th', 'Tr', 'Tw', 'Wh', 'Wr']
+
+		# holding lists
+		decryptedTextList = []
+		revTextList = text.split()
+
+		# convert each word back to normal english
+		for word in revTextList:
+			# IF | check if 4th and 3rd to last characters are in cluster
+			if (word[-4:-2] in lowerConsonantClustersList) or (word[-4:-2] in upperConsonantClustersList):
+				# YES: remove 'ay' & move cluster to front
+				normWord = word[-4:-2] + word[:-4]
+			# ELSE | 
+			else:
+				# IF | check if 3rd to last character is w
+				if (word[-3] == 'w'):
+					# YES: remove 'way'
+					normWord = word[:-3]
+				# remove 'ay' & move letter to front
+				normWord = word[-3] + word[:-3]
+			# add new word to list
+			decryptedTextList.append(normWord)
+
+		# join list with spaces in btw.
+		decryptedText = ' '.join(decryptedTextList)
+
 		x = 1
 
 	return(decryptedText)
