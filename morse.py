@@ -115,13 +115,13 @@ def main():
 
 	if (encryptDecrypt == 1):
 		filename = input("Enter the name of the file you'd like to encrypt: ")
-		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for other: "))
+		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for pig latin: "))
 		text = readFile(filename)
 		encryptedText = encrypt(text, encryptionMethod)
 		writeFile(encryptedText)
 	elif (encryptDecrypt == 2):
 		filename = input("Enter the name of the file you'd like to decrypt: ")
-		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for other: "))
+		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for pig latin: "))
 		text = readFile(filename)
 		decryptedText = decrypt(text, decryptionMethod)
 		writeFile(decryptedText)
