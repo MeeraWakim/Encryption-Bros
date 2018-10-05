@@ -1,5 +1,3 @@
-import unittest
-
 def readFile (filename):
 
 	# filename passed as a string from main
