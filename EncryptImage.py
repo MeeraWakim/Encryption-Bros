@@ -14,23 +14,21 @@ def get_image_info():
 		print("ERROR: Inputted location not a directory! Please enter a valid location.")
 		locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
 		isADirectory = os.path.isdir(locationOfDirectory)
-  
 	os.chdir(locationOfDirectory)
 	if locationOfDirectory[-1:] != "/":
 		locationOfDirectory += "/"
-
 	#Finds and loads the images 
 	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
 	while True:
-	try:
-		isAnImage = img.what(locationOfDirectory + selectedImage)
-		return selectedImage
-	except IOError:
-		print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
-		selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
-	while isAnImage != "png" and isAnImage != "jpeg":
-		print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
-		selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+		try:
+			isAnImage = img.what(locationOfDirectory + selectedImage)
+			return selectedImage
+		except IOError:
+			print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
+			selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+			while isAnImage != "png" and isAnImage != "jpeg":
+				print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
+				selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
 	while True:
 		try:
 			isAnImage = img.what(locationOfDirectory + selectedImage)
