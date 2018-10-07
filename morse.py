@@ -2,7 +2,16 @@ def readFile (filename):
 
 	# filename passed as a string from main
 	# open file for reading
+	text = open(txt, 'r')
 	# readfile into script
+	#if you want a list of characters uncomment this
+  	
+  	characters = []
+  	for words in text:
+    for letter in words:
+      characters.append(letter)
+  	return (characters)
+	
 	x = 1
 
 	return(text)
@@ -86,9 +95,10 @@ def decrypt (text, decryptionMethod):
 
 def writeFile (Text):
 
-	# encrypted or decrypted text passed in
-	# open a NEW file for writing
-	# write text to new file
+	f = open("encrypted_file.txt", "w+")
+  	f.write(Text)
+  	f.close()
+
 	x = 1
 
 def main():
