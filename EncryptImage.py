@@ -89,7 +89,7 @@ def encrypt_shuffle(theImage, rgb_image):
 	print("Shuffled the pixels of the original image. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
 	print("Encryption key saved as \"EncryptionKey.txt\" and has been saved to the directory where your original image is.")
 
-def encrypt_shuffle(theImage, rgb_image):
+def encrypt_swap(theImage, rgb_image):
 	for x in range(theImage.size[0]):
 		for y in range(theImage.size[1]):
 			rgb_image[x,y] = (rgb_image[x,y][2], rgb_image[x,y][1], rgb_image[x,y][0])
@@ -98,7 +98,7 @@ def encrypt_shuffle(theImage, rgb_image):
 	print("Swapped the red and blue color values for each pixel. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
 
 #Decryption methods
-def decrypt_shuffle(theImage, rgb_image)
+def decrypt_shuffle(theImage, rgb_image):
 	theKey = []
 	if choice == 1:
 		try:
@@ -162,7 +162,6 @@ def main():
 			decrypt_shuffle(theImage, rgb_image)
 		elif choice == 2:
 			decrypt_swap(theImage, rgb_image)
-		
 
 main()
 				
