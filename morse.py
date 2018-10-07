@@ -8,6 +8,7 @@ def readFile (filename):
 
 	text = file.read()
 	words = text.split(' ')
+	file.close()
 	return(words)
 
 
@@ -76,6 +77,7 @@ def decrypt (text, decryptionMethod):
 		'--...': '7',  '---..': '8',  '----.': '9'}
 
 		decryptedTextList = []
+		text = text.split()
 
 		for word in text:
 			if (word in englishDict.keys()):
