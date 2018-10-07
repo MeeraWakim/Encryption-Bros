@@ -32,6 +32,7 @@ def get_image_info():
 	while True:
 		try:
 			isAnImage = img.what(locationOfDirectory + selectedImage)
+			print(selectedImage)
 			return selectedImage
 		except IOError:
 			print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
@@ -45,7 +46,7 @@ def encrypt_or_decrypt():
 			return decision
 		else:
 			print("ERROR: Invalid option inputted.")
-			decision = raw_input("Would you like to encrypt or decrypt your selected image? Enter \"encrypt\" or \"decrypt\" (NOT case-sensitive): ")
+			decision = input("Would you like to encrypt or decrypt your selected image? Enter \"encrypt\" or \"decrypt\" (NOT case-sensitive): ")
     
 def which_one(selectedImage):
 	image = im.open(selectedImage)
@@ -118,8 +119,8 @@ def encrypt_swap(theImage):
 	theImage.show()
 	theImage.save("EncryptedImage.png")
 	print("Swapped the red and blue color values for each pixel. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
-	return
-  
+	
+
 def decrypt_shuffle(selectedImage):
 	rgb_image = theImage.load()
 	theKey = []
@@ -149,7 +150,7 @@ def decrypt_shuffle(selectedImage):
 		print("Shuffled the pixels of the original image. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
 	except IOError:
 		print("ERROR! No encryption key found!")
-		return
+		
 
 def decrypt_swap(selectedImage):
 	rgb_image = selectedImage.load()
@@ -160,7 +161,7 @@ def decrypt_swap(selectedImage):
 	selectedImage.show()
 	selectedImage.save("DecryptedImage.png")
 	print("Swapped the red and blue color values for each pixel. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
-	return
+	
 
 def main():
 	#User selects image 
@@ -185,5 +186,5 @@ def main():
 		  decrypt_shuffle(selectedImage)
 		elif choice == 2:
 			decrypt_swap(selectedImage)
-
+    
 main()
