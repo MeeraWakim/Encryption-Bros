@@ -4,6 +4,8 @@ from PIL import Image as im
 from numpy import*
 from random import shuffle
 
+locationOfDirectory = "" #Makes this global so that decrypt_shuffle can see it
+
 def get_info():
 	#Code that takes an image directory and finds the image after checking whether or not the supplied directory exists
 	locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
@@ -17,7 +19,7 @@ def get_info():
 	if locationOfDirectory[-1:] != "/":
 		locationOfDirectory += "/"
 
-	#Finds and loads the images 
+	#Finds and loads the images
 	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
 	while True:
 		try:
@@ -100,45 +102,47 @@ def encrypt_swap(theImage, rgb_image):
 #Decryption methods
 def decrypt_shuffle(theImage, rgb_image):
 	theKey = []
-	if choice == 1:
-		try:
-			doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
-			keyFile = open("EncryptionKey.txt", "r")
-			for line in keyFile:
-				firstRight = line.find(")")
-				secondTuple = line[firstRight+2:-1]
+	try:
+		doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
+		keyFile = open("EncryptionKey.txt", "r")
+		for line in keyFile:
+			firstRight = line.find(")")
+			secondTuple = line[firstRight+2:-1]
 
-				firstComma2nd = secondTuple.find(",")
-				secondTupleR = secondTuple[1:firstComma2nd]
-				secondComma2nd = secondTuple.find(",", firstComma2nd + 1)
-				secondTupleG = secondTuple[firstComma2nd+2:secondComma2nd]
-				secondTupleB = secondTuple[secondComma2nd+2:-1]
+			firstComma2nd = secondTuple.find(",")
+			secondTupleR = secondTuple[1:firstComma2nd]
+			secondComma2nd = secondTuple.find(",", firstComma2nd + 1)
+			secondTupleG = secondTuple[firstComma2nd+2:secondComma2nd]
+			secondTupleB = secondTuple[secondComma2nd+2:-1]
 
-				secondTuple = (int(secondTupleR), int(secondTupleG), int(secondTupleB))
-				theKey.append(secondTuple)
+			secondTuple = (int(secondTupleR), int(secondTupleG), int(secondTupleB))
+			theKey.append(secondTuple)
 
-			myIndex = 0
-			for x in range(theImage.size[0]):
-				for y in range(theImage.size[1]):
-					rgb_image[x,y] = (theKey[myIndex][0], theKey[myIndex][1], theKey[myIndex][2])
-					myIndex += 1
-			theImage.show()
-			theImage.save("DecryptedImage.png")
-			print("Shuffled the pixels of the original image. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
-		except IOError:
-			print("ERROR! No encryption key found!")
+		myIndex = 0
+		for x in range(theImage.size[0]):
+			for y in range(theImage.size[1]):
+				rgb_image[x,y] = (theKey[myIndex][0], theKey[myIndex][1], theKey[myIndex][2])
+				myIndex += 1
+		theImage.show()
+		theImage.save("DecryptedImage.png")
+		print("Shuffled the pixels of the original image. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+	except IOError:
+		print("ERROR! No encryption key found!")
 
 def decrypt_swap(theImage, rgb_image):
-	for x in range(theImage.size[0]):
-		for y in range(theImage.size[1]):
-			rgb_image[x,y] = (rgb_image[x,y][2], rgb_image[x,y][1], rgb_image[x,y][0])
-	theImage.show()
-	theImage.save("DecryptedImage.png")
-	print("Swapped the red and blue color values for each pixel. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+	if theImage.filename == "EncryptedImage.png":
+		for x in range(theImage.size[0]):
+			for y in range(theImage.size[1]):
+				rgb_image[x,y] = (rgb_image[x,y][2], rgb_image[x,y][1], rgb_image[x,y][0])
+		theImage.show()
+		theImage.save("DecryptedImage.png")
+		print("Swapped the red and blue color values for each pixel. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+	else:
+		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
 
 def main():
 	selectedImage = get_info()
-	
+
 	enOrDe = input("Would you like to encrypt or decrypt your selected image? Enter \"encrypt\" or \"decrypt\" (NOT case-sensitive): ")
 	while True:
 		if enOrDe.lower() == "encrypt" or enOrDe.lower() == "decrypt":
@@ -146,22 +150,21 @@ def main():
 		else:
 			print("ERROR: Invalid option inputted.")
 			enOrDe = input("Would you like to encrypt or decrypt your selected image? Enter \"encrypt\" or \"decrypt\" (NOT case-sensitive): ")
-	
+
 	theImage = im.open(selectedImage)
 	theImage.show()
 	rgb_image = theImage.load()
 	if enOrDe.lower() == "encrypt":
 		choice = choose()
-		if choice == 1: 
+		if choice == 1:
 			encrypt_shuffle(theImage, rgb_image)
 		elif choice == 2:
 			encrypt_swap(theImage, rgb_image)
 	else:
 		choice = choose()
-		if choice == 1: 
+		if choice == 1:
 			decrypt_shuffle(theImage, rgb_image)
 		elif choice == 2:
 			decrypt_swap(theImage, rgb_image)
 
 main()
-				
