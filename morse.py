@@ -12,13 +12,13 @@ def readFile (filename):
 	return(words)
 
 
-def encrypt (text, encryptionMethod):
+def encrypt (textList, encryptionMethod):
 
 	# text read in from file passed in
 	# int passed in that specifies which encryption method
 
 	characters = []
-	for word in text:
+	for word in textList:
 		for letter in word:
 			characters.append(letter)
 
@@ -55,7 +55,7 @@ def encrypt (text, encryptionMethod):
 
 	return(encryptedText)
 
-def decrypt (text, decryptionMethod):
+def decrypt (textList, decryptionMethod):
 
 	# text read in from file passed in
 	# int passed in that specifies which decryption method
@@ -77,9 +77,8 @@ def decrypt (text, decryptionMethod):
 		'--...': '7',  '---..': '8',  '----.': '9'}
 
 		decryptedTextList = []
-		text = text.split()
 
-		for word in text:
+		for word in textList:
 			if (word in englishDict.keys()):
 				decryptedTextList.append(englishDict[word])
 
