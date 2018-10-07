@@ -2,25 +2,24 @@ def readFile (filename):
 
 	# filename passed as a string from main
 	# open file for reading
-	text = open(txt, 'r')
+	file = open(filename, 'r')
 	# readfile into script
 	#if you want a list of characters uncomment this
-  	
-  	characters = []
-  	for words in text:
-    for letter in words:
-      characters.append(letter)
-  	return (characters)
-	
-	x = 1
 
-	return(text)
+	text = file.read()
+	words = text.split(' ')
+	return(words)
 
 
 def encrypt (text, encryptionMethod):
 
 	# text read in from file passed in
 	# int passed in that specifies which encryption method
+
+	characters = []
+	for word in text:
+		for letter in word:
+			characters.append(letter)
 
 	if (encryptionMethod == 1):
 		# do morse code encryption
@@ -43,7 +42,7 @@ def encrypt (text, encryptionMethod):
 
 		encryptedTextList = []
 
-		for char in text:
+		for char in characters:
 			if (char.upper() in morseDict.keys()):
 				encryptedTextList.append(morseDict[char.upper()])
 
@@ -59,9 +58,6 @@ def decrypt (text, decryptionMethod):
 
 	# text read in from file passed in
 	# int passed in that specifies which decryption method
-
-	morseList = text.split(' ')
-	print(morseList)
 
 	if (decryptionMethod == 1):
 		# do morse code decryption
@@ -81,7 +77,7 @@ def decrypt (text, decryptionMethod):
 
 		decryptedTextList = []
 
-		for word in morseList:
+		for word in text:
 			if (word in englishDict.keys()):
 				decryptedTextList.append(englishDict[word])
 
@@ -96,10 +92,8 @@ def decrypt (text, decryptionMethod):
 def writeFile (Text):
 
 	f = open("encrypted_file.txt", "w+")
-  	f.write(Text)
-  	f.close()
-
-	x = 1
+	f.write(Text)
+	f.close()
 
 def main():
 	
