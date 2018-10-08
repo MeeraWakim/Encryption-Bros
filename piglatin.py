@@ -4,8 +4,9 @@ def readFile (filename):
 	# filename passed as a string from main
 	# open file for reading
 	# readfile into script
-	x = 1
-
+	file = open(filename,'r')
+	text = file.read()
+	file.close()
 	return(text)
 
 def encrypt (text, encryptionMethod):
@@ -107,7 +108,9 @@ def writeFile (Text):
 	# encrypted or decrypted text passed in
 	# open a NEW file for writing
 	# write text to new file
-	x = 1
+	f = open("encrypted_file.txt","w+")
+	f.write(Text)
+	f.close()
 
 def main():
 	
