@@ -108,7 +108,7 @@ def writeFile (Text):
 	# encrypted or decrypted text passed in
 	# open a NEW file for writing
 	# write text to new file
-	f = open("encrypted_file.txt","w+")
+	f = open("pig_latin_encryption.txt","w+")
 	f.write(Text)
 	f.close()
 
@@ -129,5 +129,5 @@ def main():
 		decryptedText = decrypt(text, decryptionMethod)
 		writeFile(decryptedText)
 
-main()
+
 
