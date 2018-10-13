@@ -2,6 +2,7 @@ import os
 import imghdr as img
 from PIL import Image as im
 from numpy import*
+import numpy
 from random import shuffle
 
 locationOfDirectory = "" #Makes this global so that decrypt_shuffle can see it
@@ -99,15 +100,10 @@ def encrypt_swap(theImage, rgb_image):
 	theImage.save("EncryptedImage.png")
 	print("Swapped the red and blue color values for each pixel. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
 
-def encrypt_shuffle_swap(theImage, rgb_image):
-	count = 0
-	for x in range(theImage.width):
-		for y in range(theImage.height):
-			count += 1
-
-			if count > 10:
-				count = 0
-
+def encrypt_function(theImage, rgb_image):
+	for x in range(theImage.size[0]):
+		for y in range(theImage.size[1]):
+			rgb_image[x,y] = (((2 * (rgb_image[x,y][0] ** 3)) + (rgb_image[x,y][0] ** 2) + (rgb_image[x,y][0] + 3)), ((2 * (rgb_image[x,y][1] ** 3)) + (rgb_image[x,y][1] ** 2) + (rgb_image[x,y][1] + 3)), ((2 * (rgb_image[x,y][2] ** 3)) + (rgb_image[x,y][2] ** 2) + (rgb_image[x,y][2] + 3)))
 
 	theImage.show()
 	theImage.save("EncryptedImage.png")
@@ -154,7 +150,23 @@ def decrypt_swap(theImage, rgb_image):
 		print("Swapped the red and blue color values for each pixel. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
-
+'''
+def decrypt_function(theImage, rgb_image):
+	
+	if theImage.filename == "EncryptedImage.png":
+		for x in range(theImage.size[0]):
+			for y in range(theImage.size[1]):
+				coeff0 = [2, 1, 1, -(rgb_image[x,y][0] - 3)]
+				coeff1 = [2, 1, 1, -(rgb_image[x,y][1] - 3)]
+				coeff2 = [2, 1, 1, -(rgb_image[x,y][2] - 3)]
+				rgb_image[x,y] = ( (numpy.roots(coeff0)), (numpy.roots(coeff1)), (numpy.roots(coeff2)) )
+		
+		theImage.show()
+		theImage.save("DecryptedImage.png")
+		print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+	else:
+		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
+'''
 def main():
 	selectedImage = get_info()
 
@@ -176,7 +188,7 @@ def main():
 		elif choice == 2:
 			encrypt_swap(theImage, rgb_image)
 		elif choice == 3:
-		    encrypt_shuffle_swap(theImage, rgb_image)
+		    encrypt_function(theImage, rgb_image)
 	else:
 		choice = choose()
 		if choice == 1:
@@ -184,6 +196,7 @@ def main():
 		elif choice == 2:
 			decrypt_swap(theImage, rgb_image)
 		#elif choice == 3: 
+			#decrypt_function(theImage, rgb_image)
 			
 	print("")
 
