@@ -25,7 +25,7 @@ class TestImageMethods():
 	def test_decrypt_shuffle(self):
 		selectedImage = im.open("Shuffled.png")
 		rgb_image = selectedImage.load()
-		rgb_deshuffled-image = decrypt_shuffle(selectedImage, rgb_image)
+		rgb_deshuffled_image = decrypt_shuffle(selectedImage, rgb_image)
 		for x in range(theImage.size[0]):
 			for y in range(theImage.size[1]):
 				self.AssertEqual(rgb_image[x,y][0], rgb_deshuffled_image[x,y][0])
@@ -35,7 +35,7 @@ class TestImageMethods():
 	def test_decrypt_swap(self):
 		selectedImage = im.open("RGB.png")
 		rgb_image = selectedImage.load()
-		rgb_deswapped-image = decrypt_swap(selectedImage, rgb_image)
+		rgb_deswapped_image = decrypt_swap(selectedImage, rgb_image)
 		for x in range(theImage.size[0]):
 			for y in range(theImage.size[1]):
 				self.AssertEqual(rgb_image[x,y][0], rgb_deswapped_image[x,y][0])
