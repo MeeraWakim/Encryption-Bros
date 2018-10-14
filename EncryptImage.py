@@ -2,6 +2,7 @@ import os
 import imghdr as img
 from PIL import Image as im
 from numpy import*
+import numpy
 from random import shuffle
 
 locationOfDirectory = "" #Makes this global so that decrypt_shuffle can see it
@@ -40,7 +41,7 @@ def get_info():
 				selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
 	return selectedImage
 def choose():
-	print("Picture selected and shown. What would you like to do with this picture?\n1. Swap pixels around randomly.\n2. Swap the red and blue values of each pixel.\n")
+	print("Picture selected and shown. What would you like to do with this picture?\n1. Swap pixels around randomly.\n2. Swap the red and blue values of each pixel.\n3. manipulate the image with a mathematic function.\n")
 	choice = input("Please choose from the available options by entering the number: ")
 	while True:
 		if choice.find(".") >= 0 or choice.find("-") >= 0:
@@ -49,10 +50,10 @@ def choose():
 			try:
 				choice = int(choice)
 				dummyNum = 2/choice
-				if choice == 1 or choice == 2:
+				if choice == 1 or choice == 2 or choice == 3:
 					break
 				else:
-					choice = input("You didn't type either \"1\" or \"2\". Please try again: ")
+					choice = input("You didn't type either \"1\", \"2\" or \"3\". Please try again: ")
 			except ValueError:
 				choice = input("You didn't type in a positive integer. Please try again: ")
 			except ArithmeticError:
@@ -99,6 +100,19 @@ def encrypt_swap(theImage, rgb_image):
 	theImage.save("EncryptedImage.png")
 	print("Swapped the red and blue color values for each pixel. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
 
+def encrypt_function(theImage, rgb_image):
+	new_image = []
+	for x in range(theImage.size[0]):
+		for y in range(theImage.size[1]):
+			new_image.append([int(rgb_image[x,y][0]) ** 3, int(rgb_image[x,y][1]) ** 3, int(rgb_image[x,y][2]) ** 3])
+			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))	
+	print(new_image)
+			
+	theImage.show()
+	theImage.save("EncryptedImage.png")
+	print("Your image has been jumbled all around. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
+
+
 #Decryption methods
 def decrypt_shuffle(theImage, rgb_image):
 	theKey = []
@@ -140,6 +154,20 @@ def decrypt_swap(theImage, rgb_image):
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
 
+def decrypt_function(theImage, rgb_image):
+	#Still working out some errors!
+	if theImage.filename == "EncryptedImage.png":
+		for x in range(theImage.size[0]):
+			for y in range(theImage.size[1]):
+				print(rgb_image[x,y])
+				rgb_image[x,y] = ( (rgb_image[x,y][0] ** (1/3)), (rgb_image[x,y][1] ** (1/3)), (rgb_image[x,y][2] ** (1/3)) )
+				
+		theImage.show()
+		theImage.save("DecryptedImage.png")
+		print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+	else:
+		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
+
 def main():
 	selectedImage = get_info()
 
@@ -160,11 +188,17 @@ def main():
 			encrypt_shuffle(theImage, rgb_image)
 		elif choice == 2:
 			encrypt_swap(theImage, rgb_image)
+		elif choice == 3:
+		    encrypt_function(theImage, rgb_image)
 	else:
 		choice = choose()
 		if choice == 1:
 			decrypt_shuffle(theImage, rgb_image)
 		elif choice == 2:
 			decrypt_swap(theImage, rgb_image)
+		elif choice == 3: 
+			decrypt_function(theImage, rgb_image)
+			
+	print("")
 
 main()
