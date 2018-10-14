@@ -175,7 +175,7 @@ def decrypt_function(theImage, rgb_image):
 				for item in range(len(line)):
 					line[item] = int(line[item])
 				theKey.append(line)
-			print(theKey)
+
 			
 			count = 0
 			for x in range(theImage.size[0]):
