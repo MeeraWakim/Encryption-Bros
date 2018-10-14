@@ -104,14 +104,23 @@ def encrypt_function(theImage, rgb_image):
 	new_image = []
 	for x in range(theImage.size[0]):
 		for y in range(theImage.size[1]):
-			new_image.append([int(rgb_image[x,y][0]) ** 3, int(rgb_image[x,y][1]) ** 3, int(rgb_image[x,y][2]) ** 3])
+			line = str(rgb_image[x,y][0] ** 3) + ' ' + str(rgb_image[x,y][1] ** 3) + ' ' + str(rgb_image[x,y][2]) + '\n'
+			new_image.append(line)
 			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))	
-	print(new_image)
-			
+	
+	try:
+		doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
+		open("EncryptionKey.txt", "w").close()
+		keyFile = open("EncryptionKey.txt", "w")
+	except IOError:
+		keyFile = open("EncryptionKey.txt", "w")
+	for i in range(len(new_image)):
+		keyFile.write(str(new_image[i]))
+	keyFile.close()
 	theImage.show()
 	theImage.save("EncryptedImage.png")
-	print("Your image has been jumbled all around. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
-
+	print("Manipulated the image using a mathematical function. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
+	print("Encryption key saved as \"EncryptionKey.txt\" and has been saved to the directory where your original image is.")
 
 #Decryption methods
 def decrypt_shuffle(theImage, rgb_image):
@@ -155,16 +164,30 @@ def decrypt_swap(theImage, rgb_image):
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
 
 def decrypt_function(theImage, rgb_image):
-	#Still working out some errors!
 	if theImage.filename == "EncryptedImage.png":
-		for x in range(theImage.size[0]):
-			for y in range(theImage.size[1]):
-				print(rgb_image[x,y])
-				rgb_image[x,y] = ( (rgb_image[x,y][0] ** (1/3)), (rgb_image[x,y][1] ** (1/3)), (rgb_image[x,y][2] ** (1/3)) )
-				
-		theImage.show()
-		theImage.save("DecryptedImage.png")
-		print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+		theKey = []
+		try:
+			doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
+			keyFile = open("EncryptionKey.txt", "r")
+			for line in keyFile:
+				line = line.rstrip("\n")
+				line = line.split()
+				for item in range(len(line)):
+					line[item] = int(line[item])
+				theKey.append(line)
+			print(theKey)
+			
+			count = 0
+			for x in range(theImage.size[0]):
+				for y in range(theImage.size[1]):
+					rgb_image[x,y] = (int(float(theKey[count][0]) ** (1/3)), int(float(theKey[count][1]) ** (1/3)), int(float(theKey[count][2]) ** (1/3)))
+					count += 1
+
+			theImage.show()
+			theImage.save("DecryptedImage.png")
+			print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+		except IOError:
+			print("ERROR! No encryption key found!")
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
 
