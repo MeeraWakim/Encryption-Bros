@@ -9,11 +9,11 @@ locationOfDirectory = "" #Makes this global so that decrypt_shuffle can see it
 
 def get_info():
 	#Code that takes an image directory and finds the image after checking whether or not the supplied directory exists
-	locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
+	locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt or decrypt: ")
 	isADirectory = os.path.isdir(locationOfDirectory)
 	while not isADirectory:
 		print("ERROR: Inputted location not a directory! Please enter a valid location.")
-		locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
+		locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt or decrypt: ")
 		isADirectory = os.path.isdir(locationOfDirectory)
 	os.chdir(locationOfDirectory)
 	#Ensures that the path can be found in python
@@ -21,7 +21,7 @@ def get_info():
 		locationOfDirectory += "/"
 
 	#Finds and loads the images
-	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt or decrypt. The file must be either a PNG or JPEG file. Enter it here: ")
 	while True:
 		try:
 			isAnImage = img.what(locationOfDirectory + selectedImage)
@@ -109,18 +109,18 @@ def encrypt_function(theImage, rgb_image):
 			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))	
 	
 	try:
-		doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
-		open("EncryptionKey.txt", "w").close()
-		keyFile = open("EncryptionKey.txt", "w")
+		doesExist = img.what(locationOfDirectory + "EncryptionKey_Fnct.txt")
+		open("EncryptionKey_Fnct.txt", "w").close()
+		keyFile = open("EncryptionKey_Fnct.txt", "w")
 	except IOError:
-		keyFile = open("EncryptionKey.txt", "w")
+		keyFile = open("EncryptionKey_Fnct.txt", "w")
 	for i in range(len(new_image)):
 		keyFile.write(str(new_image[i]))
 	keyFile.close()
 	theImage.show()
 	theImage.save("EncryptedImage.png")
 	print("Manipulated the image using a mathematical function. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
-	print("Encryption key saved as \"EncryptionKey.txt\" and has been saved to the directory where your original image is.")
+	print("Encryption key saved as \"EncryptionKey_Fnct.txt\" and has been saved to the directory where your original image is.")
 
 #Decryption methods
 def decrypt_shuffle(theImage, rgb_image):
@@ -167,8 +167,8 @@ def decrypt_function(theImage, rgb_image):
 	if theImage.filename == "EncryptedImage.png":
 		theKey = []
 		try:
-			doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
-			keyFile = open("EncryptionKey.txt", "r")
+			doesExist = img.what(locationOfDirectory + "EncryptionKey_Fnct.txt")
+			keyFile = open("EncryptionKey_Fnct.txt", "r")
 			for line in keyFile:
 				line = line.rstrip("\n")
 				line = line.split()
@@ -176,7 +176,6 @@ def decrypt_function(theImage, rgb_image):
 					line[item] = int(line[item])
 				theKey.append(line)
 
-			
 			count = 0
 			for x in range(theImage.size[0]):
 				for y in range(theImage.size[1]):
