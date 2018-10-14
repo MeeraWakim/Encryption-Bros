@@ -41,7 +41,7 @@ def get_info():
 				selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
 	return selectedImage
 def choose():
-	print("Picture selected and shown. What would you like to do with this picture?\n1. Swap pixels around randomly.\n2. Swap the red and blue values of each pixel.\n3. Shift the image around in chunks.\n")
+	print("Picture selected and shown. What would you like to do with this picture?\n1. Swap pixels around randomly.\n2. Swap the red and blue values of each pixel.\n3. manipulate the image with a mathematic function.\n")
 	choice = input("Please choose from the available options by entering the number: ")
 	while True:
 		if choice.find(".") >= 0 or choice.find("-") >= 0:
@@ -99,16 +99,19 @@ def encrypt_swap(theImage, rgb_image):
 	theImage.show()
 	theImage.save("EncryptedImage.png")
 	print("Swapped the red and blue color values for each pixel. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
-
+''''
 def encrypt_function(theImage, rgb_image):
+	new_image = []
 	for x in range(theImage.size[0]):
 		for y in range(theImage.size[1]):
-			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))
+			new_image.append([int(rgb_image[x,y][0]) ** 3, int(rgb_image[x,y][1]) ** 3, int(rgb_image[x,y][2]) ** 3])
+			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))	
+	print(new_image)
 			
 	theImage.show()
 	theImage.save("EncryptedImage.png")
 	print("Your image has been jumbled all around. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
-
+''''
 
 #Decryption methods
 def decrypt_shuffle(theImage, rgb_image):
@@ -150,9 +153,9 @@ def decrypt_swap(theImage, rgb_image):
 		print("Swapped the red and blue color values for each pixel. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
-
+'''
 def decrypt_function(theImage, rgb_image):
-	
+	#Still working out some errors!
 	if theImage.filename == "EncryptedImage.png":
 		for x in range(theImage.size[0]):
 			for y in range(theImage.size[1]):
@@ -164,7 +167,7 @@ def decrypt_function(theImage, rgb_image):
 		print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
-
+''''
 def main():
 	selectedImage = get_info()
 
