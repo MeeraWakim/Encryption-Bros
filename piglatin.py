@@ -15,9 +15,17 @@ def encrypt (text, encryptionMethod):
 	# int passed in that specifies which encryption method
 
 	if (encryptionMethod == 1):
-		# do morse code encryption
-		# use a dictionary to map letters to dots/dashes?
-		x = 1
+		encryptedText = ""
+		arrayOfLetters = list(text)
+		print(arrayOfLetters)
+
+		for i in range(len(arrayOfLetters)):
+			if(arrayOfLetters[i]==' '):
+				arrayOfLetters[i] = '.'+" "
+			else:
+				currentchar = arrayOfLetters[i]
+				arrayOfLetters[i] = str(ord(currentchar))+" "
+			encryptedText += str(arrayOfLetters[i])
 
 	elif (encryptionMethod == 2):
 
@@ -118,13 +126,14 @@ def main():
 
 	if (encryptDecrypt == 1):
 		filename = input("Enter the name of the file you'd like to encrypt: ")
-		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for pig latin: "))
+		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for hashing code, (2) for pig latin: "))
 		text = readFile(filename)
 		encryptedText = encrypt(text, encryptionMethod)
 		writeFile(encryptedText)
+
 	elif (encryptDecrypt == 2):
 		filename = input("Enter the name of the file you'd like to decrypt: ")
-		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for pig latin: "))
+		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for hashing code, (2) for pig latin: "))
 		text = readFile(filename)
 		decryptedText = decrypt(text, decryptionMethod)
 		writeFile(decryptedText)
