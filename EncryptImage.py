@@ -103,8 +103,8 @@ def encrypt_swap(theImage, rgb_image):
 def encrypt_function(theImage, rgb_image):
 	for x in range(theImage.size[0]):
 		for y in range(theImage.size[1]):
-			rgb_image[x,y] = (((2 * (rgb_image[x,y][0] ** 3)) + (rgb_image[x,y][0] ** 2) + (rgb_image[x,y][0] + 3)), ((2 * (rgb_image[x,y][1] ** 3)) + (rgb_image[x,y][1] ** 2) + (rgb_image[x,y][1] + 3)), ((2 * (rgb_image[x,y][2] ** 3)) + (rgb_image[x,y][2] ** 2) + (rgb_image[x,y][2] + 3)))
-
+			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))
+			
 	theImage.show()
 	theImage.save("EncryptedImage.png")
 	print("Your image has been jumbled all around. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
@@ -150,23 +150,21 @@ def decrypt_swap(theImage, rgb_image):
 		print("Swapped the red and blue color values for each pixel. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
-'''
+
 def decrypt_function(theImage, rgb_image):
 	
 	if theImage.filename == "EncryptedImage.png":
 		for x in range(theImage.size[0]):
 			for y in range(theImage.size[1]):
-				coeff0 = [2, 1, 1, -(rgb_image[x,y][0] - 3)]
-				coeff1 = [2, 1, 1, -(rgb_image[x,y][1] - 3)]
-				coeff2 = [2, 1, 1, -(rgb_image[x,y][2] - 3)]
-				rgb_image[x,y] = ( (numpy.roots(coeff0)), (numpy.roots(coeff1)), (numpy.roots(coeff2)) )
-		
+				print(rgb_image[x,y])
+				rgb_image[x,y] = ( (rgb_image[x,y][0] ** (1/3)), (rgb_image[x,y][1] ** (1/3)), (rgb_image[x,y][2] ** (1/3)) )
+				
 		theImage.show()
 		theImage.save("DecryptedImage.png")
 		print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
-'''
+
 def main():
 	selectedImage = get_info()
 
@@ -195,8 +193,8 @@ def main():
 			decrypt_shuffle(theImage, rgb_image)
 		elif choice == 2:
 			decrypt_swap(theImage, rgb_image)
-		#elif choice == 3: 
-			#decrypt_function(theImage, rgb_image)
+		elif choice == 3: 
+			decrypt_function(theImage, rgb_image)
 			
 	print("")
 
