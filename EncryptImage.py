@@ -6,15 +6,16 @@ import numpy
 from random import shuffle, randint
 from math import floor
 
+
 locationOfDirectory = "" #Makes this global so that decrypt_shuffle can see it
 
 def get_info():
 	#Code that takes an image directory and finds the image after checking whether or not the supplied directory exists
-	locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
+	locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt or decrypt: ")
 	isADirectory = os.path.isdir(locationOfDirectory)
 	while not isADirectory:
 		print("ERROR: Inputted location not a directory! Please enter a valid location.")
-		locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
+		locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt or decrypt: ")
 		isADirectory = os.path.isdir(locationOfDirectory)
 	os.chdir(locationOfDirectory)
 	#Ensures that the path can be found in python
@@ -22,7 +23,7 @@ def get_info():
 		locationOfDirectory += "/"
 
 	#Finds and loads the images
-	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt or decrypt. The file must be either a PNG or JPEG file. Enter it here: ")
 	while True:
 		try:
 			isAnImage = img.what(locationOfDirectory + selectedImage)
@@ -43,7 +44,11 @@ def get_info():
 	return selectedImage
 
 def choose():
+<<<<<<< HEAD
 	print("Picture selected and shown. What would you like to do with this picture?\n1. Swap pixels around randomly.\n2. Swap the red and blue values of each pixel.\n3. Manipulate the image with a mathematical function.\n4. Encrypt an image based on a user-given key.\n")
+=======
+	print("Picture selected and shown. What would you like to do with this picture?\n1. Swap pixels around randomly.\n2. Swap the red and blue values of each pixel.\n3. manipulate the image with a mathematic function.\n")
+>>>>>>> images
 	choice = input("Please choose from the available options by entering the number: ")
 	while True:
 		if choice.find(".") >= 0 or choice.find("-") >= 0:
@@ -52,10 +57,17 @@ def choose():
 			try:
 				choice = int(choice)
 				dummyNum = 2/choice
+<<<<<<< HEAD
 				if choice == 1 or choice == 2 or choice == 3 or choice == 4:
 					break
 				else:
 					choice = input("You didn't type either \"1\", \"2\", \"3\", or \"4\". Please try again: ")
+=======
+				if choice == 1 or choice == 2 or choice == 3:
+					break
+				else:
+					choice = input("You didn't type either \"1\", \"2\" or \"3\". Please try again: ")
+>>>>>>> images
 			except ValueError:
 				choice = input("You didn't type in a positive integer. Please try again: ")
 			except ArithmeticError:
@@ -124,6 +136,7 @@ def encrypt_keyHash(theImage, rgb_image):
 		charAsInt = ord(userKey[index]) #Gets the ASCII value of a character within userKey
 		charList.append(charAsInt)
 
+<<<<<<< HEAD
 	#Caesar cipher based on userKey
 	shiftedImage = rgb_image #shiftedImage will represent the final encrypted image - but first set it to the original image
 	inProgressImage = im.new("RGB", (theImage.size[0], theImage.size[1])) #Image in between shifts
@@ -158,6 +171,30 @@ def encrypt_keyHash(theImage, rgb_image):
 	keyFile.close()
 	print("Employed a modified Caesar cipher based on your key. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
 #######################################################################################################################################
+=======
+def encrypt_function(theImage, rgb_image):
+	new_image = []
+	for x in range(theImage.size[0]):
+		for y in range(theImage.size[1]):
+			line = str(rgb_image[x,y][0] ** 3) + ' ' + str(rgb_image[x,y][1] ** 3) + ' ' + str(rgb_image[x,y][2]) + '\n'
+			new_image.append(line)
+			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))	
+	
+	try:
+		doesExist = img.what(locationOfDirectory + "EncryptionKey_Fnct.txt")
+		open("EncryptionKey_Fnct.txt", "w").close()
+		keyFile = open("EncryptionKey_Fnct.txt", "w")
+	except IOError:
+		keyFile = open("EncryptionKey_Fnct.txt", "w")
+	for i in range(len(new_image)):
+		keyFile.write(str(new_image[i]))
+	keyFile.close()
+	theImage.show()
+	theImage.save("EncryptedImage.png")
+	print("Manipulated the image using a mathematical function. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
+	print("Encryption key saved as \"EncryptionKey_Fnct.txt\" and has been saved to the directory where your original image is.")
+
+>>>>>>> images
 #Decryption methods
 
 def decrypt_shuffle(theImage, rgb_image):
@@ -248,6 +285,7 @@ def decrypt_keyHash(theImage, rgb_image):
 			decryptedImage = inProgressImage
 			inProgressImage = im.new("RGB", (theImage.size[0], theImage.size[1])) #Image in between shifts
 
+<<<<<<< HEAD
 		decryptedImage.show()
 		decryptedImage.save("DecryptedImage.png")
 		print("Reversed the Caesar cipher employed on your original image. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
@@ -255,6 +293,35 @@ def decrypt_keyHash(theImage, rgb_image):
 	except IOError:
 		print("ERROR! No user key found!")
 #######################################################################################################################################
+=======
+def decrypt_function(theImage, rgb_image):
+	if theImage.filename == "EncryptedImage.png":
+		theKey = []
+		try:
+			doesExist = img.what(locationOfDirectory + "EncryptionKey_Fnct.txt")
+			keyFile = open("EncryptionKey_Fnct.txt", "r")
+			for line in keyFile:
+				line = line.rstrip("\n")
+				line = line.split()
+				for item in range(len(line)):
+					line[item] = int(line[item])
+				theKey.append(line)
+
+			count = 0
+			for x in range(theImage.size[0]):
+				for y in range(theImage.size[1]):
+					rgb_image[x,y] = (int(float(theKey[count][0]) ** (1/3)), int(float(theKey[count][1]) ** (1/3)), int(float(theKey[count][2]) ** (1/3)))
+					count += 1
+
+			theImage.show()
+			theImage.save("DecryptedImage.png")
+			print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+		except IOError:
+			print("ERROR! No encryption key found!")
+	else:
+		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
+
+>>>>>>> images
 def main():
 	selectedImage = get_info()
 
@@ -277,18 +344,27 @@ def main():
 			encrypt_swap(theImage, rgb_image)
 		elif choice == 3:
 		    encrypt_function(theImage, rgb_image)
+<<<<<<< HEAD
 		elif choice == 4:
 			encrypt_keyHash(theImage, rgb_image)
+=======
+>>>>>>> images
 	else:
 		choice = choose()
 		if choice == 1:
 			decrypt_shuffle(theImage, rgb_image)
 		elif choice == 2:
 			decrypt_swap(theImage, rgb_image)
+<<<<<<< HEAD
 		elif choice == 3:
 			decrypt_function(theImage, rgb_image)
 		elif choice == 4:
 			decrypt_keyHash(theImage, rgb_image)
+=======
+		elif choice == 3: 
+			decrypt_function(theImage, rgb_image)
+			
+>>>>>>> images
 	print("")
 
 main()
