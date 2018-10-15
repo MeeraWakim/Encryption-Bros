@@ -1,3 +1,5 @@
+import base64
+
 def readFile (filename):
 
 	# filename passed as a string from main
@@ -61,7 +63,14 @@ def encrypt (textList, encryptionMethod):
 
 	elif (encryptionMethod == 2):
 		# do other method encryption
-		x = 1
+		new_string = ''
+		for words in textList:
+			for letter in words:
+				new_string = new_string + letter
+			new_string = new_string + ' '
+		new_string = new_string[:-2]
+
+		encryptedText = vig_cypher(new_string,'a key','e')
 
 	return(encryptedText)
 
@@ -98,14 +107,46 @@ def decrypt (textList, decryptionMethod):
 		decryptedText = ''.join(decryptedTextList)
 
 	elif (decryptionMethod == 2):
-		# do other method decryption
-		x = 1
+		new_string = ''
+		for words in textList:
+			for letter in words:
+				new_string = new_string + letter
+			new_string = new_string + ' '
+		new_string = new_string[:-2]
+
+		decryptedText = vig_cypher(new_string,'a key','d')
 
 	return(decryptedText)
 
-def writeFile (Text):
+def vig_cypher(txt='', key='', typ='d'):
+	if not txt:
+		print ('Needs text')
+		return
+	if not key:
+		print ('Needs key')
+		return
+	if typ not in ('d', 'e'):
+		print ('Type must be "d" or "e"')
+		return
 
-	f = open("encrypted_file.txt", "w+")
+	k_len = len(key)
+	k_ints = [ord(i) for i in key]
+	txt_ints = [ord(i) for i in txt]
+	ret_txt = ''
+	for i in range(len(txt_ints)):
+		adder = k_ints[i % k_len]
+		if typ == 'd':
+			adder *= -1
+
+		v = (txt_ints[i] - 32 + adder) % 95
+
+		ret_txt += chr(v + 32)
+
+	return ret_txt
+
+def writeFile (Text, name):
+	file_name = name + '.txt'
+	f = open(file_name, "w+")
 	f.write(Text)
 	f.close()
 
@@ -135,14 +176,15 @@ def main():
 				continue
 			errorFlag = 0
 		text = readFile(filename)
+		encrypt_name = input("Enter name for encrypted file: ")
 		encryptedText = encrypt(text,encryptionMethod)
-		writeFile(encryptedText)
+		writeFile(encryptedText, encrypt_name)
 	elif (encryptDecrypt == 2):
 		filename = input("Enter the name of the file you'd like to decrypt: ")
 		errorFlag = 1
 		while errorFlag == 1:
 			try:
-				decryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for other: "))
+				decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for other: "))
 				while(decryptionMethod != 1 and decryptionMethod != 2):
 					decryptionMethod = int(input("That was an incorrect value. Please try again\n(1) for morse code, (2) for other: "))
 			except ValueError:
@@ -150,8 +192,15 @@ def main():
 				continue
 			errorFlag = 0
 		text = readFile(filename)
+		encrypt_name = input("Enter name for encrypted file: ")
 		decryptedText = decrypt(text,decryptionMethod)
-		writeFile(decryptedText)
+		writeFile(decryptedText, encrypt_name)
 
 main()
+
+
+
+
+
+
 
