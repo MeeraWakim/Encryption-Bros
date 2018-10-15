@@ -2,7 +2,14 @@ def readFile (filename):
 
 	# filename passed as a string from main
 	# open file for reading
-	file = open(filename, 'r')
+	errorFlag = 1
+	while errorFlag == 1:
+		try:
+			file = open(filename, 'r')
+		except FileNotFoundError:
+			filename = input("File not found. Please try entering filename/path again: ")
+			continue
+		errorFlag = 0
 	# readfile into script
 	#if you want a list of characters uncomment this
 
@@ -10,7 +17,6 @@ def readFile (filename):
 	words = text.split(' ')
 	file.close()
 	return(words)
-
 
 def encrypt (textList, encryptionMethod):
 
@@ -21,6 +27,7 @@ def encrypt (textList, encryptionMethod):
 	for word in textList:
 		for letter in word:
 			characters.append(letter)
+		characters.append(' ')
 
 	if (encryptionMethod == 1):
 		# do morse code encryption
@@ -38,7 +45,7 @@ def encrypt (textList, encryptionMethod):
     	'0': '-----',  '1': '.----',  '2': '..---',
     	'3': '...--',  '4': '....-',  '5': '.....',
     	'6': '-....',  '7': '--...',  '8': '---..',
-    	'9': '----.'
+    	'9': '----.',  ' ': ''
     	}
 
 		encryptedTextList = []
@@ -46,6 +53,8 @@ def encrypt (textList, encryptionMethod):
 		for char in characters:
 			if (char.upper() in morseDict.keys()):
 				encryptedTextList.append(morseDict[char.upper()])
+			else:
+				encryptedTextList.append('(' + char + ')')		# put parenthesis around characters that aren't alphanumeric
 
 		encryptedText = ' '.join(encryptedTextList)
 
@@ -74,13 +83,16 @@ def decrypt (textList, decryptionMethod):
 		'-.--': 'Y',   '--..': 'Z',  '-----': '0', 
 		'.----': '1',  '..---': '2',  '...--': '3',
 		'....-': '4',  '.....': '5',  '-....': '6', 
-		'--...': '7',  '---..': '8',  '----.': '9'}
+		'--...': '7',  '---..': '8',  '----.': '9',  '': ' '}
 
 		decryptedTextList = []
 
 		for word in textList:
 			if (word in englishDict.keys()):
 				decryptedTextList.append(englishDict[word])
+			else:
+				word = word[1:len(word)-1]
+				decryptedTextList.append(word)
 
 		decryptedText = ''.join(decryptedTextList)
 
