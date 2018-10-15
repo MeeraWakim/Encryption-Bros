@@ -145,4 +145,4 @@ def main():
 		writeFile(decryptedText)
 
 
-
+main()
