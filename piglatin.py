@@ -15,12 +15,20 @@ def encrypt (text, encryptionMethod):
 	# int passed in that specifies which encryption method
 
 	if (encryptionMethod == 1):
-		# do morse code encryption
-		# use a dictionary to map letters to dots/dashes?
-		x = 1
+		encryptedText = ""
+		arrayOfLetters = list(text)
+		print(arrayOfLetters)
+
+		for i in range(len(arrayOfLetters)):
+			if(arrayOfLetters[i]==' '):
+				arrayOfLetters[i] = '.'+" "
+			else:
+				currentchar = arrayOfLetters[i]
+				arrayOfLetters[i] = str(ord(currentchar)*54-12)+" "
+			encryptedText += str(arrayOfLetters[i])
 
 	elif (encryptionMethod == 2):
-
+		encryptedText = ""
 		# constants list
 		lowerVowelsList = ['a', 'e', 'i', 'o', 'u', 'w']
 		upperVowelsList = ['A', 'E', 'I', 'O', 'U', 'W']
@@ -49,7 +57,7 @@ def encrypt (text, encryptionMethod):
 		# join list w/ spaces in btw.
 		encryptedText = ' '.join(encryptedTextList)
 
-		x = 1
+
 
 	return(encryptedText)
 
@@ -59,11 +67,19 @@ def decrypt (text, decryptionMethod):
 	# int passed in that specifies which decryption method
 
 	if (decryptionMethod == 1):
-		# do morse code decryption
-		# use a dictionary to map letters to dots/dashes?
-		x = 1
+		decryptedText=""
+		arrayOfNumbers=text.split()
+		for i in range(len(arrayOfNumbers)):
+			if(arrayOfNumbers[i]=='.'):
+				arrayOfNumbers[i]=" "
+			else:
+				currentNum = int(arrayOfNumbers[i])
+				currentNum = (currentNum+12)/54
+				arrayOfNumbers[i]= chr(int(currentNum))
+			decryptedText += str(arrayOfNumbers[i])
 
 	elif (decryptionMethod == 2):
+		decryptedText=""
 		# do other method decryption
 
 		# constant lists
@@ -99,8 +115,6 @@ def decrypt (text, decryptionMethod):
 		# join list with spaces in btw.
 		decryptedText = ' '.join(decryptedTextList)
 
-		x = 1
-
 	return(decryptedText)
 
 def writeFile (Text):
@@ -118,13 +132,14 @@ def main():
 
 	if (encryptDecrypt == 1):
 		filename = input("Enter the name of the file you'd like to encrypt: ")
-		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for pig latin: "))
+		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for hashing code, (2) for pig latin: "))
 		text = readFile(filename)
 		encryptedText = encrypt(text, encryptionMethod)
 		writeFile(encryptedText)
+
 	elif (encryptDecrypt == 2):
 		filename = input("Enter the name of the file you'd like to decrypt: ")
-		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for pig latin: "))
+		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for hashing code, (2) for pig latin: "))
 		text = readFile(filename)
 		decryptedText = decrypt(text, decryptionMethod)
 		writeFile(decryptedText)
