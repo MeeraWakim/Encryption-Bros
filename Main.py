@@ -18,7 +18,7 @@ def choose(choice):
     return choice
 
 def main():
-    choice = input("What would you like to do? Please select an option below:\n1. Encrypt/decrypt a text file\n2. Encrypt/decrypt an image\n\nEnter your choice: ")
+    choice = input("What would you like to do? Please select an option below:\n1. Edit a text file\n2. Edit an image\n\nEnter your choice: ")
     choice = choose(choice)
     if choice == 1:
         choice = input("Would you like to encrypt a text file into Morse code or pig Latin?\n1. Morse code\n2. Pig Latin\n\nEnter your choice: ")
