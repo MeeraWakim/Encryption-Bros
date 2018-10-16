@@ -170,9 +170,9 @@ def main():
 		errorFlag = 1
 		while errorFlag == 1:
 			try:
-				encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for other: "))
+				encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for morse code, (2) for Vigenere Cypher: "))
 				while(encryptionMethod != 1 and encryptionMethod != 2):
-					encryptionMethod = int(input("That was an incorrect value. Please try again\n(1) for morse code, (2) for other: "))
+					encryptionMethod = int(input("That was an incorrect value. Please try again\n(1) for morse code, (2) for Vigenere Cypher: "))
 			except ValueError:
 				print("That was an incorrect value. Please try again")
 				continue
@@ -180,7 +180,7 @@ def main():
 		if(encryptionMethod == 1):
 			method = "Morse Code"
 		else:
-			method = "Other"
+			method = "Vigenere Cypher"
 		text = readFile(filename)
 		encrypt_name = input("Enter name for encrypted file: ")
 		t1 = time.time()
@@ -194,9 +194,9 @@ def main():
 		errorFlag = 1
 		while errorFlag == 1:
 			try:
-				decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for other: "))
+				decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for morse code, (2) for Vigenere Cypher: "))
 				while(decryptionMethod != 1 and decryptionMethod != 2):
-					decryptionMethod = int(input("That was an incorrect value. Please try again\n(1) for morse code, (2) for other: "))
+					decryptionMethod = int(input("That was an incorrect value. Please try again\n(1) for morse code, (2) for Vigenere Cypher: "))
 			except ValueError:
 				print("That was an incorrect value. Please try again")
 				continue
@@ -204,7 +204,7 @@ def main():
 		if(decryptionMethod == 1):
 			method = "Morse Code"
 		else:
-			method = "Other"
+			method = "Vigenere Cypher"
 		text = readFile(filename)
 		encrypt_name = input("Enter name for encrypted file: ")
 		t1 = time.time()
