@@ -1,4 +1,5 @@
 import base64
+import time
 
 def readFile (filename):
 
@@ -164,6 +165,7 @@ def main():
 		errorFlag = 0
 
 	if (encryptDecrypt == 1):
+		function = "Encryption"
 		filename = input("Enter the name of the file you'd like to encrypt: ")
 		errorFlag = 1
 		while errorFlag == 1:
@@ -175,11 +177,19 @@ def main():
 				print("That was an incorrect value. Please try again")
 				continue
 			errorFlag = 0
+		if(encryptionMethod == 1):
+			method = "Morse Code"
+		else:
+			method = "Other"
 		text = readFile(filename)
 		encrypt_name = input("Enter name for encrypted file: ")
+		t1 = time.time()
 		encryptedText = encrypt(text,encryptionMethod)
 		writeFile(encryptedText, encrypt_name)
+		t2 = time.time()
+		t = t2 - t1
 	elif (encryptDecrypt == 2):
+		function = "Decryption"
 		filename = input("Enter the name of the file you'd like to decrypt: ")
 		errorFlag = 1
 		while errorFlag == 1:
@@ -191,10 +201,19 @@ def main():
 				print("That was an incorrect value. Please try again")
 				continue
 			errorFlag = 0
+		if(decryptionMethod == 1):
+			method = "Morse Code"
+		else:
+			method = "Other"
 		text = readFile(filename)
 		encrypt_name = input("Enter name for encrypted file: ")
+		t1 = time.time()
 		decryptedText = decrypt(text,decryptionMethod)
 		writeFile(decryptedText, encrypt_name)
+		t2 = time.time()
+		t = t2 - t1
+
+	print("\nReport\n-----------\n%s\nMethod: %s\nRuntime: %f s\nFile Encrypted: %s\nFile Created: %s.txt\n" % (function,method,t,filename,encrypt_name))
 
 main()
 
