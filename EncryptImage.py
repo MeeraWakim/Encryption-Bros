@@ -5,6 +5,7 @@ from numpy import*
 import numpy
 from random import shuffle, randint
 from math import floor
+from math import ceil
 
 locationOfDirectory = "" #Makes this global so that decrypt_shuffle can see it
 
@@ -62,6 +63,7 @@ def choose():
 				choice = input("You didn't type in a positive integer. Please try again: ")
 	print("")
 	return int(choice)
+
 #######################################################################################################################################
 #Encryption methods
 
@@ -108,7 +110,10 @@ def encrypt_function(theImage, rgb_image):
 	new_image = []
 	for x in range(theImage.size[0]):
 		for y in range(theImage.size[1]):
-			line = str(rgb_image[x,y][0] ** 3) + ' ' + str(rgb_image[x,y][1] ** 3) + ' ' + str(rgb_image[x,y][2]) + '\n'
+			calc1 = int(ceil(rgb_image[x,y][0] ** 3))
+			calc2 = int(ceil(rgb_image[x,y][1] ** 3))
+			calc3 = int(ceil(rgb_image[x,y][2] ** 3))
+			line = str(calc1) + ' ' + str(calc2) + ' ' + str(calc3) + '\n'
 			new_image.append(line)
 			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))
 
@@ -226,7 +231,7 @@ def decrypt_function(theImage, rgb_image):
 			count = 0
 			for x in range(theImage.size[0]):
 				for y in range(theImage.size[1]):
-					rgb_image[x,y] = (int(float(theKey[count][0]) ** (1/3)), int(float(theKey[count][1]) ** (1/3)), int(float(theKey[count][2]) ** (1/3)))
+					rgb_image[x,y] = (int(ceil(theKey[count][0] ** (1/3))), int(ceil(theKey[count][1] ** (1/3))), int(ceil(theKey[count][2] ** (1/3))))
 					count += 1
 
 			theImage.show()
