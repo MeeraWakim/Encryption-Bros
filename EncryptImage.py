@@ -11,11 +11,11 @@ locationOfDirectory = "" #Makes this global so that decrypt_shuffle can see it
 
 def get_info():
 	#Code that takes an image directory and finds the image after checking whether or not the supplied directory exists
-	locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
+	locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt or decrypt: ")
 	isADirectory = os.path.isdir(locationOfDirectory)
 	while not isADirectory:
 		print("ERROR: Inputted location not a directory! Please enter a valid location.")
-		locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt: ")
+		locationOfDirectory = input("Please enter the location of the directory that contains the image(s) that you would like to encrypt or decrypt: ")
 		isADirectory = os.path.isdir(locationOfDirectory)
 	os.chdir(locationOfDirectory)
 	#Ensures that the path can be found in python
@@ -23,32 +23,38 @@ def get_info():
 		locationOfDirectory += "/"
 
 	#Finds and loads the images
-	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+	selectedImage = input("\nPlease enter the file name of the image that you would like to encrypt or decrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+	print()
 	while True:
 		try:
 			isAnImage = img.what(locationOfDirectory + selectedImage)
 			break
 		except IOError:
 			print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
-			selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+			selectedImage = input("Please enter the file name of the image that you would like to encrypt or decrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+			print()
 	while isAnImage != "png" and isAnImage != "jpeg":
 		print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
-		selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+		selectedImage = input("Please enter the file name of the image that you would like to encrypt or decrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+		print()
 		while True:
 			try:
 				isAnImage = img.what(locationOfDirectory + selectedImage)
 				break
 			except IOError:
 				print("ERROR: Selected file is not either a PNG or JPEG file. Please try again.")
-				selectedImage = input("Please enter the file name of the image that you would like to encrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+				selectedImage = input("Please enter the file name of the image that you would like to encrypt or decrypt. The file must be either a PNG or JPEG file. Enter it here: ")
+				print()
 	return selectedImage
 
 def choose():
 	print("Picture selected and shown. What would you like to do with this picture?\n1. Swap pixels around randomly.\n2. Swap the red and blue values of each pixel.\n3. Manipulate the image with a mathematical function.\n4. Encrypt an image based on a user-given key.\n")
 	choice = input("Please choose from the available options by entering the number: ")
+	print()
 	while True:
 		if choice.find(".") >= 0 or choice.find("-") >= 0:
 			choice = input("You didn't type in a positive integer. Please try again: ")
+			print()
 		else:
 			try:
 				choice = int(choice)
@@ -57,10 +63,13 @@ def choose():
 					break
 				else:
 					choice = input("You didn't type either \"1\", \"2\", \"3\", or \"4\". Please try again: ")
+					print()
 			except ValueError:
 				choice = input("You didn't type in a positive integer. Please try again: ")
+				print()
 			except ArithmeticError:
 				choice = input("You didn't type in a positive integer. Please try again: ")
+				print()
 	print("")
 	return int(choice)
 
@@ -287,12 +296,14 @@ def main():
 	selectedImage = get_info()
 
 	enOrDe = input("Would you like to encrypt or decrypt your selected image? Enter \"encrypt\" or \"decrypt\" (NOT case-sensitive): ")
+	print()
 	while True:
 		if enOrDe.lower() == "encrypt" or enOrDe.lower() == "decrypt":
 			break
 		else:
 			print("ERROR: Invalid option inputted.")
 			enOrDe = input("Would you like to encrypt or decrypt your selected image? Enter \"encrypt\" or \"decrypt\" (NOT case-sensitive): ")
+			print()
 
 	theImage = im.open(selectedImage)
 	theImage.show()
