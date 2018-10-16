@@ -101,9 +101,9 @@ def decrypt (text, decryptionMethod):
 				# IF | check if 3rd to last character is w
 				if (word[-3] == 'w'):
 					# check if 4th to last character is also w
-					if (word[-4] == 'w' or word[-4] == 'W'):
+					if (word[-3] == 'w' or word[-3] == 'W'):
 						# YES: remove 'way' and move letter to front
-						normWord = word[-4] + word[:-4]
+						normWord = word[-3] + word[:-3]
 					else:
 						# NO: remove 'way'
 						normWord = word[:-3]
