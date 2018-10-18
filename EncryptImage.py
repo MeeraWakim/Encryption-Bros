@@ -89,13 +89,13 @@ def encrypt_shuffle(theImage, rgb_image):
 		for y in range(theImage.size[1]):
 			rgb_image[x,y] = (newImage[index][0], newImage[index][1], newImage[index][2])
 			index += 1
-
+	filename = input("What would you like to name your encrypted image?")
 	try:
-		doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
-		open("EncryptionKey.txt", "w").close()
-		keyFile = open("EncryptionKey.txt", "w")
+		doesExist = img.what(locationOfDirectory + filename + "_Key.txt")
+		open(filename + "_Key.txt", "w").close()
+		keyFile = open(filename + "_Key.txt", "w")
 	except IOError:
-		keyFile = open("EncryptionKey.txt", "w")
+		keyFile = open(filename + "_Key.txt", "w")
 	for anotherIndex in range(len(oldImage)):
 		keyFile.write(str(newImage[anotherIndex]))
 		keyFile.write("=")
@@ -103,9 +103,9 @@ def encrypt_shuffle(theImage, rgb_image):
 		keyFile.write("\n")
 	keyFile.close()
 	theImage.show()
-	theImage.save("EncryptedImage.png")
-	print("Shuffled the pixels of the original image. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
-	print("Encryption key saved as \"EncryptionKey.txt\" and has been saved to the directory where your original image is.")
+	theImage.save(filename + ".png")
+	print("Shuffled the pixels of the original image. The encrypted image is called " + filename + ".png and has been saved to the directory where your original image is.")
+	print("Encryption key saved as " + filename + ".txt and has been saved to the directory where your original image is.")
 
 def encrypt_swap(theImage, rgb_image):
 	for x in range(theImage.size[0]):
@@ -113,7 +113,7 @@ def encrypt_swap(theImage, rgb_image):
 			rgb_image[x,y] = (rgb_image[x,y][2], rgb_image[x,y][1], rgb_image[x,y][0])
 	theImage.show()
 	theImage.save("EncryptedImage.png")
-	print("Swapped the red and blue color values for each pixel. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
+	print("Swapped the red and blue color values for each pixel. The encrypted image is called " + filename + ".png and has been saved to the directory where your original image is.")
 
 def encrypt_function(theImage, rgb_image):
 	new_image = []
@@ -125,20 +125,21 @@ def encrypt_function(theImage, rgb_image):
 			line = str(calc1) + ' ' + str(calc2) + ' ' + str(calc3) + '\n'
 			new_image.append(line)
 			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))
-
+	
+	filename = input("Please enter the name you would like to give your file: ")
 	try:
-		doesExist = img.what(locationOfDirectory + "EncryptionKey_Fnct.txt")
-		open("EncryptionKey_Fnct.txt", "w").close()
-		keyFile = open("EncryptionKey_Fnct.txt", "w")
+		doesExist = img.what(locationOfDirectory + filename + "_Key.txt")
+		open(filename + "_Key.txt", "w").close()
+		keyFile = open(filename + "_Key.txt", "w")
 	except IOError:
-		keyFile = open("EncryptionKey_Fnct.txt", "w")
+		keyFile = open(filename + "_Key.txt", "w")
 	for i in range(len(new_image)):
 		keyFile.write(str(new_image[i]))
 	keyFile.close()
 	theImage.show()
-	theImage.save("EncryptedImage.png")
-	print("Manipulated the image using a mathematical function. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
-	print("Encryption key saved as \"EncryptionKey_Fnct.txt\" and has been saved to the directory where your original image is.")
+	theImage.save(filename + ".png")
+	print("Manipulated the image using a mathematical function. The encrypted image is called " + filename + ".png and has been saved to the directory where your original image is.")
+	print("Encryption key saved as " + filename + ".txt and has been saved to the directory where your original image is.")
 
 def encrypt_keyHash(theImage, rgb_image):
 	userKey = input("Please enter any kind of sentence to act as your encryption key. Your chosen picture will be scrambled based on your choice of key. Your key cannot contain any \"\\\" (backslash) symbols: ")
@@ -168,27 +169,30 @@ def encrypt_keyHash(theImage, rgb_image):
 		shiftedImage = inProgressImage
 		inProgressImage = im.new("RGB", (theImage.size[0], theImage.size[1])) #Image in between shifts
 	shiftedImage.show()
-	shiftedImage.save("EncryptedImage.png")
+	
+	#Naming and saving the files
+	filename = input("Please enter what you would like to name your file: ")
+	shiftedImage.save(filename + ".png")
 
 	try:
-		doesExist = img.what(locationOfDirectory + "YourKey.txt")
-		open("YourKey.txt", "w").close()
-		keyFile = open("YourKey.txt", "w")
+		doesExist = img.what(locationOfDirectory + filename + "_Key.txt")
+		open(filename + "_Key.txt", "w").close()
+		keyFile = open(filename + "_Key.txt", "w")
 	except IOError:
-		keyFile = open("YourKey.txt", "w")
+		keyFile = open(filename + "_Key.txt", "w")
 	keyFile.write(str(userKey) + "\n")
 	for index in range(len(randomCoords)):
 		keyFile.write(str(randomCoords[index][0]) + "," + str(randomCoords[index][1]) + "!\n")
 	keyFile.close()
-	print("Employed a modified Caesar cipher based on your key. The encrypted image is called \"EncryptedImage.png\" and has been saved to the directory where your original image is.")
+	print("Employed a modified Caesar cipher based on your key. The encrypted image is called " + filename + ".png and has been saved to the directory where your original image is.")
 #######################################################################################################################################
 #Decryption methods
 
-def decrypt_shuffle(theImage, rgb_image):
+def decrypt_shuffle(theImage, rgb_image, filename):
 	theKey = []
 	try:
-		doesExist = img.what(locationOfDirectory + "EncryptionKey.txt")
-		keyFile = open("EncryptionKey.txt", "r")
+		doesExist = img.what(locationOfDirectory + filename +"_Key.txt")
+		keyFile = open(filename + "_Key.txt", "r")
 		for line in keyFile:
 			firstRight = line.find(")")
 			secondTuple = line[firstRight+2:-1]
@@ -208,28 +212,27 @@ def decrypt_shuffle(theImage, rgb_image):
 				rgb_image[x,y] = (theKey[myIndex][0], theKey[myIndex][1], theKey[myIndex][2])
 				myIndex += 1
 		theImage.show()
-		theImage.save("DecryptedImage.png")
-		print("Shuffled the pixels of the original image. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+		decryptedname = input("Please enter a name for your decrypted file: ")
+		theImage.save(decryptedname + ".png")
+		print("Shuffled the pixels of the original image. The decrypted image is called " + decryptedname + ".png and has been saved to the directory where your encrypted image is.")
 	except IOError:
 		print("ERROR! No encryption key found!")
 
 def decrypt_swap(theImage, rgb_image):
-	if theImage.filename == "EncryptedImage.png":
-		for x in range(theImage.size[0]):
-			for y in range(theImage.size[1]):
-				rgb_image[x,y] = (rgb_image[x,y][2], rgb_image[x,y][1], rgb_image[x,y][0])
-		theImage.show()
-		theImage.save("DecryptedImage.png")
-		print("Swapped the red and blue color values for each pixel. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
-	else:
-		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
+	for x in range(theImage.size[0]):
+		for y in range(theImage.size[1]):
+			rgb_image[x,y] = (rgb_image[x,y][2], rgb_image[x,y][1], rgb_image[x,y][0])
+	theImage.show()
+	decryptedname = input("Please enter a name for your decrypted file: ")
+	theImage.save(decryptedname + ".png")
+	print("Swapped the red and blue color values for each pixel. The decrypted image is called " + decryptedname + ".png and has been saved to the directory where your encrypted image is.")
+	
 
-def decrypt_function(theImage, rgb_image):
-	if theImage.filename == "EncryptedImage.png":
+def decrypt_function(theImage, rgb_image, filename):
 		theKey = []
 		try:
-			doesExist = img.what(locationOfDirectory + "EncryptionKey_Fnct.txt")
-			keyFile = open("EncryptionKey_Fnct.txt", "r")
+			doesExist = img.what(locationOfDirectory + filename + "_Key.txt")
+			keyFile = open(filename + "_Key.txt", "r")
 			for line in keyFile:
 				line = line.rstrip("\n")
 				line = line.split()
@@ -244,17 +247,18 @@ def decrypt_function(theImage, rgb_image):
 					count += 1
 
 			theImage.show()
-			theImage.save("DecryptedImage.png")
-			print("Reversed the equation. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+			decryptedname = input("Please enter a name for your decrypted file: ")
+			theImage.save(decryptedname + ".png")
+			print("Reversed the equation. The decrypted image is called " + decryptedname + ".png and has been saved to the directory where your encrypted image is.")
 		except IOError:
 			print("ERROR! No encryption key found!")
 	else:
 		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
 
-def decrypt_keyHash(theImage, rgb_image):
+def decrypt_keyHash(theImage, rgb_image, filename):
 	try:
-		doesExist = img.what(locationOfDirectory + "YourKey.txt")
-		keyFile = open("YourKey.txt", "r")
+		doesExist = img.what(locationOfDirectory + filename + "_Key.txt")
+		keyFile = open( filename + "_Key.txt", "r")
 		lineCounter = 0
 		userKey = ""
 		charAsInt = []
@@ -286,8 +290,9 @@ def decrypt_keyHash(theImage, rgb_image):
 			inProgressImage = im.new("RGB", (theImage.size[0], theImage.size[1])) #Image in between shifts
 
 		decryptedImage.show()
-		decryptedImage.save("DecryptedImage.png")
-		print("Reversed the Caesar cipher employed on your original image. The decrypted image is called \"DecryptedImage.png\" and has been saved to the directory where your encrypted image is.")
+		decryptedname = input("Please enter a name for your decrypted file: ")
+		theImage.save(decryptedname + ".png")
+		print("Reversed the Caesar cipher employed on your original image. The decrypted image is called " + decryptedname + ".png and has been saved to the directory where your encrypted image is.")
 
 	except IOError:
 		print("ERROR! No user key found!")
@@ -321,13 +326,19 @@ def main():
 	else:
 		choice = choose()
 		if choice == 1:
-			decrypt_shuffle(theImage, rgb_image)
+			filename = input("Please enter the name of your file: ")
+			print()
+			decrypt_shuffle(theImage, rgb_image, filename)
 		elif choice == 2:
 			decrypt_swap(theImage, rgb_image)
 		elif choice == 3:
-			decrypt_function(theImage, rgb_image)
+			filename = input("Please enter the name of your file: ")
+			print()
+			decrypt_function(theImage, rgb_image, filename)
 		elif choice == 4:
-			decrypt_keyHash(theImage, rgb_image)
+			filename = input("Please enter the name of your file: ")
+			print()
+			decrypt_keyHash(theImage, rgb_image, filename)
 	print("")
 
 main()
