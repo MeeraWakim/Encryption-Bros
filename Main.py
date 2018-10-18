@@ -1,3 +1,6 @@
+
+typeChosen = 0
+
 def choose(choice):
     while True:
         if choice.find(".") >= 0 or choice.find("-") >= 0:
