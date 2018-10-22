@@ -22,6 +22,9 @@ def choose(choice):
     return choice
 
 def main():
+    morseCount = 0
+    pigCount = 0
+    imageCount = 0
     while(1):
         choice = input("What would you like to do? Please select an option below:\n1. Edit a text file\n2. Edit an image\n3. Exit Program\n\nEnter your choice: ")
         choice = choose(choice)
@@ -29,11 +32,23 @@ def main():
             choice = input("Would you like to encrypt a text file into Morse/Vig Cypher or Pig Latin/Hashing?\n1. Morse/Vig Cypher\n2. Pig Latin/Hashing\n\nEnter your choice: ")
             choice = choose(choice)
             if choice == 1:
-                import morse
+                if morseCount == 0:
+                    import morse
+                    morseCount += 1
+                else:
+                    morse.main()
             else:
-                import piglatin
+                if pigCount == 0:
+                    import piglatin
+                    pigCount += 1
+                else:
+                    piglatin.main()
         elif choice == 2:
-            import EncryptImage
+            if imageCount == 0:
+                import EncryptImage
+                imageCount += 1
+            else:
+                EncryptImage.main()
         else:
             print("Exiting program...\n")
             sys.exit()
