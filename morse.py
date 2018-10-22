@@ -69,7 +69,7 @@ def encrypt (textList, encryptionMethod):
 			for letter in words:
 				new_string = new_string + letter
 			new_string = new_string + ' '
-		new_string = new_string[:-2]
+		
 
 		encryptedText = vig_cypher(new_string,'a key','e')
 
