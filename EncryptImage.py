@@ -70,7 +70,6 @@ def choose():
 			except ArithmeticError:
 				choice = input("You didn't type in a positive integer. Please try again: ")
 				print()
-	print("")
 	return int(choice)
 
 #######################################################################################################################################
@@ -125,7 +124,7 @@ def encrypt_function(theImage, rgb_image):
 			line = str(calc1) + ' ' + str(calc2) + ' ' + str(calc3) + '\n'
 			new_image.append(line)
 			rgb_image[x,y] = ((rgb_image[x,y][0] ** 3), (rgb_image[x,y][1] ** 3), (rgb_image[x,y][2] ** 3))
-	
+
 	filename = input("Please enter the name you would like to give your file: ")
 	try:
 		doesExist = img.what(locationOfDirectory + filename + "_Key.txt")
@@ -161,15 +160,22 @@ def encrypt_keyHash(theImage, rgb_image):
 		randomCoord.append(randomX)
 		randomCoord.append(randomY)
 		randomCoords.append(randomCoord)
+		inProgressImageList = []
 		for x in range(theImage.size[0]):
+			row = []
 			for y in range(theImage.size[1]):
 				xCoord = (numShift + x + randomX)%theImage.size[0]
 				yCoord = (y + randomY + floor((x + randomX + numShift)/theImage.size[0]))%theImage.size[1]
-				inProgressImage[x][y] = shiftedImage[xCoord][yCoord]
-		shiftedImage = inProgressImage
+				row.append((shiftedImage[xCoord, yCoord][0], shiftedImage[xCoord, yCoord][1], shiftedImage[xCoord, yCoord][2]))
+			inProgressImageList.append(row)
+		inProgressImageList = numpy.array(inProgressImageList, dtype = numpy.uint8)
+		if index != len(charList) - 1:
+			shiftedImage = im.fromarray(inProgressImageList).load()
+		else:
+			shiftedImage = im.fromarray(inProgressImageList)
 		inProgressImage = im.new("RGB", (theImage.size[0], theImage.size[1])) #Image in between shifts
 	shiftedImage.show()
-	
+
 	#Naming and saving the files
 	filename = input("Please enter what you would like to name your file: ")
 	shiftedImage.save(filename + ".png")
@@ -226,7 +232,6 @@ def decrypt_swap(theImage, rgb_image):
 	decryptedname = input("Please enter a name for your decrypted file: ")
 	theImage.save(decryptedname + ".png")
 	print("Swapped the red and blue color values for each pixel. The decrypted image is called " + decryptedname + ".png and has been saved to the directory where your encrypted image is.")
-	
 
 def decrypt_function(theImage, rgb_image, filename):
 		theKey = []
@@ -252,8 +257,6 @@ def decrypt_function(theImage, rgb_image, filename):
 			print("Reversed the equation. The decrypted image is called " + decryptedname + ".png and has been saved to the directory where your encrypted image is.")
 		except IOError:
 			print("ERROR! No encryption key found!")
-	else:
-		print("ERROR! You can't decrypt an image that hasn't been encrypted first!")
 
 def decrypt_keyHash(theImage, rgb_image, filename):
 	try:
@@ -276,18 +279,32 @@ def decrypt_keyHash(theImage, rgb_image, filename):
 			charAsInt.append(ord(char))
 
 		decryptedImage = rgb_image
-		inProgressImage = im.new("RGB", (theImage.size[0], theImage.size[1])) #Image in between shifts
+		inProgressImage  = []
+		for x in range(theImage.size[0]):
+			row = []
+			for y in range(theImage.size[1]):
+				row.append(0)
+			inProgressImage.append(row)
 		for index in range(len(randomCoords)-1, -1, -1):
 			numShift = charAsInt[index]
 			randomX = randomCoords[index][0]
 			randomY = randomCoords[index][1]
 			for x in range(theImage.size[0]):
 				for y in range(theImage.size[1]):
-					xCoord = (numShift + x + randomX)%theImage.size[0]
+					xCoord = (x + randomX + numShift)%theImage.size[0]
 					yCoord = (y + randomY + floor((x + randomX + numShift)/theImage.size[0]))%theImage.size[1]
-					inProgressImage[xCoord][yCoord] = decryptedImage[x][y]
-			decryptedImage = inProgressImage
-			inProgressImage = im.new("RGB", (theImage.size[0], theImage.size[1])) #Image in between shifts
+					inProgressImage[x][y] = (decryptedImage[xCoord, yCoord][0], decryptedImage[xCoord, yCoord][1], decryptedImage[xCoord, yCoord][2])
+			inProgressImageList = numpy.array(inProgressImage, dtype = numpy.uint8)
+			if index != 0:
+				decryptedImage = im.fromarray(inProgressImageList).load()
+			else:
+				decryptedImage = im.fromarray(inProgressImageList)
+			inProgressImage  = [] #Image in between shifts
+			for x in range(theImage.size[0]):
+				row = []
+				for y in range(theImage.size[1]):
+					row.append(0)
+				inProgressImage.append(row)
 
 		decryptedImage.show()
 		decryptedname = input("Please enter a name for your decrypted file: ")
