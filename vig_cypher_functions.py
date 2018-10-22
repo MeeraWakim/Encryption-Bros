@@ -17,9 +17,12 @@ def vig_cypher(txt='', key='', typ='d'):
         adder = k_ints[i % k_len]
         if typ == 'd':
             adder *= -1
+        if txt_ints[i] == 10:
+            ret_txt += chr(10)
+            
+        else:
+            v = (txt_ints[i] - 32 + adder) % 95
 
-        v = (txt_ints[i] - 32 + adder) % 95
-
-        ret_txt += chr(v + 32)
+            ret_txt += chr(v + 32)
 
     return ret_txt
