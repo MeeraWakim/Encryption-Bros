@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="732afb96-ddaa-4e55-88de-4996a610a6ea" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/morse_functions.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/vig_cypher_functions.py" afterDir="false" />
@@ -8,6 +9,13 @@
       <change beforePath="$PROJECT_DIR$/morse.py" beforeDir="false" afterPath="$PROJECT_DIR$/morse.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/morse_functions_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/morse_functions_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/text.txt" afterDir="false" />
+=======
+    <list default="true" id="309a7f79-ac21-4b57-bdfb-2cbf1586f360" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encrypted_file.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pig_latin_encryption.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/piglatin.py" beforeDir="false" afterPath="$PROJECT_DIR$/piglatin.py" afterDir="false" />
+>>>>>>> meera-ella
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,12 +33,30 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+<<<<<<< HEAD
           <entry key="py" value="1" />
+=======
+          <entry key="py" value="6" />
+>>>>>>> meera-ella
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+<<<<<<< HEAD
           <entry key="Python" value="1" />
+=======
+          <entry key="Python" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="1701" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="1701" />
+>>>>>>> meera-ella
         </counts>
       </usages-collector>
     </session>
@@ -40,14 +66,30 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/encrypted_file.txt">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state>
               <caret lean-forward="true" />
+=======
+            <state relative-caret-position="243">
+              <caret line="144" column="134" selection-start-line="144" selection-start-column="134" selection-end-line="144" selection-end-column="134" />
+>>>>>>> meera-ella
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>encrypt_shuf</find>
+      <find>encryptedText</find>
+      <find>readFile</find>
+      <find>print</find>
+    </findStrings>
+  </component>
+>>>>>>> meera-ella
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -70,6 +112,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -99,7 +142,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="RunDashboard">
@@ -154,10 +196,28 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/EncryptImage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+=======
+    <entry file="file://$PROJECT_DIR$/Main.py" />
+    <entry file="file://$PROJECT_DIR$/EncryptImage_test.py" />
+    <entry file="file://$PROJECT_DIR$/EncryptImage.py" />
+    <entry file="file://$PROJECT_DIR$/hash.py" />
+    <entry file="file://$PROJECT_DIR$/encrypted_file.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="34" lean-forward="true" selection-start-column="34" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piglatin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="144" column="134" selection-start-line="144" selection-start-column="134" selection-end-line="144" selection-end-column="134" />
+>>>>>>> meera-ella
         </state>
       </provider>
     </entry>

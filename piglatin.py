@@ -1,9 +1,12 @@
+originalFileName =""
 
 def readFile (filename):
 
 	# filename passed as a string from main
 	# open file for reading
 	# readfile into script
+	global originalFileName
+	originalFileName=filename[:-4]
 	file = open(filename,'r')
 	text = file.read()
 	file.close()
@@ -17,7 +20,6 @@ def encrypt (text, encryptionMethod):
 	if (encryptionMethod == 1):
 		encryptedText = ""
 		arrayOfLetters = list(text)
-		print(arrayOfLetters)
 
 		for i in range(len(arrayOfLetters)):
 			if(arrayOfLetters[i]==' '):
@@ -26,7 +28,7 @@ def encrypt (text, encryptionMethod):
 				currentchar = arrayOfLetters[i]
 				arrayOfLetters[i] = str(ord(currentchar)*54-12)+" "
 			encryptedText += str(arrayOfLetters[i])
-
+		print("SUCCESSFUL: Your file has been encrypted with a hashing function to a new file.")
 	elif (encryptionMethod == 2):
 		encryptedText = ""
 		# constants list
@@ -57,7 +59,7 @@ def encrypt (text, encryptionMethod):
 		# join list w/ spaces in btw.
 		encryptedText = ' '.join(encryptedTextList)
 
-
+		print("SUCCESSFUL: Your file has been encrypted in pig latin to a new file.")
 
 	return(encryptedText)
 
@@ -77,6 +79,7 @@ def decrypt (text, decryptionMethod):
 				currentNum = (currentNum+12)/54
 				arrayOfNumbers[i]= chr(int(currentNum))
 			decryptedText += str(arrayOfNumbers[i])
+		print("SUCCESSFUL: Your file has been decrypted from hashing encryption to a new file.")
 
 	elif (decryptionMethod == 2):
 		decryptedText=""
@@ -114,7 +117,7 @@ def decrypt (text, decryptionMethod):
 
 		# join list with spaces in btw.
 		decryptedText = ' '.join(decryptedTextList)
-
+	print("SUCCESSFUL: Your file has been decrypted from pig latin to a new file.")
 	return(decryptedText)
 
 def writeFile (Text):
@@ -122,7 +125,8 @@ def writeFile (Text):
 	# encrypted or decrypted text passed in
 	# open a NEW file for writing
 	# write text to new file
-	f = open("pig_latin_encryption.txt","w+")
+	filewrittento= originalFileName+'_encrypted.txt'
+	f = open(filewrittento , "w+")
 	f.write(Text)
 	f.close()
 
@@ -131,14 +135,14 @@ def main():
 	encryptDecrypt = int(input("Would you like to encrypt or decrypt a file?\n(1) for encrypt, (2) for decrypt: "))
 
 	if (encryptDecrypt == 1):
-		filename = input("Enter the name of the file you'd like to encrypt: ")
+		filename = input("Enter the name of the file you'd like to encrypt:\n(if the file is not in this directory, input full path)\n")
 		encryptionMethod = int(input("Which encyrption method would you like to use?\n(1) for hashing code, (2) for pig latin: "))
 		text = readFile(filename)
 		encryptedText = encrypt(text, encryptionMethod)
 		writeFile(encryptedText)
 
 	elif (encryptDecrypt == 2):
-		filename = input("Enter the name of the file you'd like to decrypt: ")
+		filename = input("Enter the name of the file you'd like to decrypt:\n(if the file is not in this directory, input full path)\n ")
 		decryptionMethod = int(input("Which decyrption method would you like to use?\n(1) for hashing code, (2) for pig latin: "))
 		text = readFile(filename)
 		decryptedText = decrypt(text, decryptionMethod)
